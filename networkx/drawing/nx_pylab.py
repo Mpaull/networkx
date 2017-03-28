@@ -123,20 +123,20 @@ def draw(G, pos=None, ax=None, hold=None, **kwds):
 
     if 'with_labels' not in kwds:
         kwds['with_labels'] = 'labels' in kwds
-    b = plt.ishold()
+    # b = plt.ishold()
     # allow callers to override the hold state by passing hold=True|False
-    h = kwds.pop('hold', None)
-    if h is not None:
-        plt.hold(h)
+    # h = kwds.pop('hold', None)
+    # if h is not None:
+        # plt.hold(h)
     try:
-        draw_networkx(G, pos=pos, ax=ax, **kwds)
+        node_collection, edge_collection = draw_networkx(G, pos=pos, ax=ax, **kwds)
         ax.set_axis_off()
         plt.draw_if_interactive()
     except:
-        plt.hold(b)
+        # plt.hold(b)
         raise
-    plt.hold(b)
-    return
+    # plt.hold(b)
+    return node_collection, edge_collection
 
 
 def draw_networkx(G, pos=None, arrows=True, with_labels=True, **kwds):
@@ -277,6 +277,8 @@ def draw_networkx(G, pos=None, arrows=True, with_labels=True, **kwds):
     if with_labels:
         draw_networkx_labels(G, pos, **kwds)
     plt.draw_if_interactive()
+
+    return node_collection, edge_collection
 
 
 def draw_networkx_nodes(G, pos,
